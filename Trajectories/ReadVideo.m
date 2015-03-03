@@ -114,7 +114,7 @@ plot(fnext1(1,98),fnext1(2,98),'red*')
 clc
 obj=VideoReader('barn1.avi'); %read video
 M=8;
-firstframe=6;
+firstframe=1;
 imgprev=read(obj,firstframe);
 iprev=rgb2gray(imgprev);
 Iprev=single(iprev);
@@ -124,7 +124,6 @@ imshow(iprev)
 hold on
 plot(fprev(1,:),fprev(2,:),'red*')
 
-matchprev=vl_clickpoint([fprev(1,:);fprev(2,:)],M);
 nbrPoints=length(matchprev);
 xpoints=zeros(nbrPoints,M);
 ypoints=zeros(nbrPoints,M);
@@ -135,24 +134,26 @@ dmissing=0;
 fmissing=0;
 
 for n=firstframe+1:M
-
+    
     imgnext=read(obj,n);
     
     inext=rgb2gray(imgnext);
     Inext=single(inext);
     
     [fnext,dnext] = vl_sift(Inext, 'Peakthresh',2,'edgethresh',6,'Octaves',4,'Levels',4) ; %SIFT it
+    ind=Graypointfilter(I,fnext,80);
+    fnext=fnext(:,ind);
+    ind=Gradfilter(I,f1,3,20,6);
     
     
-    
-    [matchnext]=vl_ubcmatch(dprev(:,matchprev),dnext)
-    
-    for i=1:length(matchprev)
-        if~(ismember(i,matchnext))
-            missing=i;
-        end
-        
-    end
+    %     [matchnext]=vl_ubcmatch(dprev(:,matchprev),dnext)
+    %
+    %     for i=1:length(matchprev)
+    %         if~(ismember(i,matchnext))
+    %             missing=i;
+    %         end
+    %
+    %     end
     
     matchnext=matchnext(2,:);
     xadd=fnext(1,matchnext);
