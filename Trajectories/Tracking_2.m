@@ -9,7 +9,7 @@ clear variables
 %--------------------------------------------------------------------------
 
 obj = VideoReader('Infant_1.avi');
-n = 5; 
+n = 50; 
 A = read(obj,[1 n]);
 F=cell(n,1);
 D=cell(n,1);
@@ -81,15 +81,15 @@ for j = 2:n-1
         %disp('hej')
         p=find(matchesold(1,:)==matches(1,k));% finding which element in old that was equal to current match
         
-        if length(p)>1
-            disp('hej')
-            p=find(scores==max(scores(p)));
-        end
+%         if length(p)>1
+%             disp('hej')
+%             p=find(scores==min(scores(p)));
+%         end
         
         %Here we store new data into the existing structures in T, note
         %that we get the index from the second row in matches where the
         %trajectory 'name' is stored do access the right structure in T
-        %(matchesold(2,p(1))) and then storeing the data from F into the
+        %(matchesold(2,p(1))) and then storing the data from F into the
         %structure fields
         
         % 'x' value stored
@@ -109,7 +109,7 @@ for j = 2:n-1
     else
         %This is what happens if there are a new keypoint that has been
         %matched
-        T(length(T)+1)=struct('x',[F{j}(1,matches(1,k)) F{j+1}(1,matches(2,k))],'y',[F{j}(2,matches(1,k)) F{j+1}(2,matches(2,k))],'frame',[j j+1],'name',[j matches(2,j)]);
+        T(length(T)+1)=struct('x',[F{j}(1,matches(1,k)) F{j+1}(1,matches(2,k))],'y',[F{j}(2,matches(1,k)) F{j+1}(2,matches(2,k))],'frame',[j j+1],'name',[j matches(2,k)]);
         matchesnew(:,i)=[matches(2,k);length(T)+1];
         i=i+1;
     end
@@ -119,6 +119,10 @@ for j = 2:n-1
     
 end
     
-    
+for i = 1:length(T)
+    plot(T(i).x,T(i).y)
+    hold on
+    axis([0 720 0 576])
+end
     
     
