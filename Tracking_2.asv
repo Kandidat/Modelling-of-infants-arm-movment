@@ -63,7 +63,7 @@ end
 %frame 2, does the descriptor in frame 2 match any descriptor in frame 3?
 %matches old stores the descriptor(index) from frame 2 to se if it got a
 %match in frame 3 and thus building a continuous trajectory
-matchesold=[matches(2,:);1:size(matches,2)]; % contains two rows first with the matches(indecies) and second with name on the trajectory
+matchesold=[matches(2,:);1:size(matches,2)] % contains two rows first with the matches(indecies) and second with name on the trajectory
 %--------------------------------------------------------------------------
 %The following loop finds the trajectories
 %--------------------------------------------------------------------------
@@ -78,13 +78,10 @@ for j = 2:n-1
     %if any of the new mathes are found among the old ones the they should
     %continue a trajectory
     if any(matchesold(1,:)==matches(1,k))>0 %any returns a 1 i any element in old is equal to current match being investigated
-        %disp('hej')
+        disp('hej')
         p=find(matchesold(1,:)==matches(1,k));% finding which element in old that was equal to current match
-        
         if length(p)>1
-            disp('hej')
-            p=find(scores==max(scores(p)));
-        end
+            p=find(max([scores(p(1)) scores(p(2))])
         
         %Here we store new data into the existing structures in T, note
         %that we get the index from the second row in matches where the
