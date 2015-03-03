@@ -1,4 +1,5 @@
 function [vector] = closest(oldpoints,newpoints)
+%Hej Eric hur är det hos dej?
 %finds the closest points in newpoints and compares with oldpoints. Returns
 %a vector with values from newpoints with the closest values at the same
 %postion as in oldpoints.
