@@ -9,7 +9,7 @@ clear variables
 %--------------------------------------------------------------------------
 
 obj = VideoReader('Infant_1.avi');
-n = 50; 
+n = 10; 
 A = read(obj,[1 n]);
 F=cell(n,1);
 D=cell(n,1);
@@ -51,6 +51,7 @@ end
 % the most recent match
 %
 %--------------------------------------------------------------------------
+%%
 [matches,scores]=vl_ubcmatch(D{1},D{2});
 for j = 1:size(matches,2)
     
@@ -67,7 +68,7 @@ matchesold=[matches(2,:);1:size(matches,2)]; % contains two rows first with the 
 %--------------------------------------------------------------------------
 %The following loop finds the trajectories
 %--------------------------------------------------------------------------
-%%
+
 for j = 2:n-1
     
     [matches,scores]=vl_ubcmatch(D{j},D{j+1});
@@ -81,10 +82,11 @@ for j = 2:n-1
         %disp('hej')
         p=find(matchesold(1,:)==matches(1,k));% finding which element in old that was equal to current match
         
-%         if length(p)>1
-%             disp('hej')
-%             p=find(scores==min(scores(p)));
-%         end
+        if length(p)>1
+            if matchesold(2,p(1))&matchesold(2,p(1))>length(T)
+                disp('hej')
+            end
+        end
         
         %Here we store new data into the existing structures in T, note
         %that we get the index from the second row in matches where the
