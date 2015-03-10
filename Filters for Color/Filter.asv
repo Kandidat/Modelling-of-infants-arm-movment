@@ -10,10 +10,7 @@ function fnew=Filter(I,f)
 %INPUT:
 %       I = RGB image
 %       f = matrix containing inofrmation of the SIFT-keypoints from that
-%       image obtained with vl_sift from the VLFEAT toolbox
-%
-%OUTPUT:
-%       fnew = The filtered out keypoints
+%       image obtained with vl_sift from the VlFEAT toolbox
 %
 % I must be an RGB image
 %Filters out keypoints...
@@ -24,9 +21,7 @@ function fnew=Filter(I,f)
 Igry=single(rgb2gray(I));
 idxg=Graypointfilter(Igry,f,75);
 idxc=ColorfilterHSV(I,f);
-%The section bellow prevents storing same keypoint twice and merges the
-%result from Colorgilter and Graypointfilter
-%--------------------------------------------------------------------------
+
 i=ismember(idxg,idxc);
 
 idxg=idxg(i==0);
@@ -34,8 +29,7 @@ idxg=idxg(i==0);
 idx=[idxg idxc];
 
 fnew=f(:,idx);
-%--------------------------------------------------------------------------
-%Finally Gradfilter is applied to refine set
+
 idx=Gradfilter(Igry,fnew,4,20,6);
 
 fnew=fnew(:,idx);
