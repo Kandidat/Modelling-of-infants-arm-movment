@@ -1,4 +1,4 @@
-function fnew=Filter(I,f)
+function [fnew,dnew]=Filter(I,f,d)
 %--------------------------------------------------------------------------
 %Filter returns the filtered set of keypoints fnew given an RGB image with
 %corresponding SIFT-keypoints f
@@ -11,9 +11,11 @@ function fnew=Filter(I,f)
 %       I = RGB image
 %       f = matrix containing inofrmation of the SIFT-keypoints from that
 %       image obtained with vl_sift from the VLFEAT toolbox
+%       d = matric containing descriptor information
 %
 %OUTPUT:
 %       fnew = The filtered out keypoints
+%       dnew = Corresponding descriptors
 %
 % I must be an RGB image
 %Filters out keypoints...
@@ -34,8 +36,10 @@ idxg=idxg(i==0);
 idx=[idxg idxc];
 
 fnew=f(:,idx);
+dnew=d(:,idx);
 %--------------------------------------------------------------------------
 %Finally Gradfilter is applied to refine set
 idx=Gradfilter(Igry,fnew,4,20,6);
 
 fnew=fnew(:,idx);
+dnew=dnew(:,idx);

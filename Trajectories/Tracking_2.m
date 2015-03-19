@@ -76,7 +76,7 @@ for j = 2:n-1
     matchesnew=zeros(size(matches));
     %step trough evrey match to se if it is a continuing trajectory
     for k = 1:size(matches,2)
-    %if any of the new mathes are found among the old ones the they should
+    %if any of the new descriptors are found among the old matches the they should
     %continue a trajectory
     if any(matchesold(1,:)==matches(1,k))>0 %any returns a 1 i any element in old is equal to current match being investigated
         %disp('hej')
