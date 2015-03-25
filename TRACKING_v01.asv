@@ -147,7 +147,7 @@ for i = 1:3 %looping to find matches through all frames
  
  disold = matchesold(:,a==0);
  dmis=D{n}(disold(1,:))
- % nya påbörjade matchingarmatc
+ % nya påbörjade matchingar
  % lägg till i T
  
  newnew = matches(:,b==0);
