@@ -11,7 +11,7 @@ function [fnew,dnew]=Filter(I,f,d)
 %       I = RGB image
 %       f = matrix containing inofrmation of the SIFT-keypoints from that
 %       image obtained with vl_sift from the VLFEAT toolbox
-%       d = matric containing descriptor information
+%       d = matrix containing descriptor information
 %
 %OUTPUT:
 %       fnew = The filtered out keypoints
