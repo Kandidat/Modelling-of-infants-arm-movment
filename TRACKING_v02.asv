@@ -21,7 +21,7 @@ vidObj{i}.CurrentTime = 50;
 end
 
 
-frames=60;
+frames=120;
 
 
 D=cell(frames,3);
@@ -32,11 +32,13 @@ F=cell(frames,3);
 %SIFT AND SAVE ALL DESCRIPTORS AND KEYPOINTS
 %The most time consuming part of the program
 %--------------------------------------------------------------------------
+A=zeros(480,640,3,frames);
 for n = 1:frames 
     
     for i = 1:1
         
         Irgb=readFrame(vidObj{i});
+        A(:,:,:,n)=Irgb;
         I=single(rgb2gray(Irgb));
         
         
@@ -75,9 +77,9 @@ fmis=[];
         xy1=fmis(1:2,matchesmis(1,:));
         xy2=F{n+1,i}(1:2,matchesmis(2,:));
         
-        diff=sqrt((xy1(1,:)-xy2(1,:)).^2+(xy1(2,:)-xy2(2,:)).^2);
+        diff==sqrt((xy1(1,:)-xy2(1,:)).^2+(xy1(2,:)-xy2(2,:)).^2);
         
-        matchesmis(:,diff>25)=[];
+        matchesmis(:,diff>10)=[];
     end
     
     %cheking distance between matched keypoints
@@ -163,7 +165,7 @@ fmis=[];
 
              if isempty(dmis)<1
 
-             id=matchesmisold(3,:)>6; 
+             id=matchesmisold(3,:)>5; 
              
              %if the descriptor as been missing for more than 5 frames erase (end track)
              matchesmisold(:,id)=[];
