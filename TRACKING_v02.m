@@ -1,6 +1,8 @@
 %--------------------------------------------------------------------------
 %PROGARM SKELETON FOR TRACKING ALGORITM
-%This program mainly const
+%This program mainly constructs the structurearray T containing information
+%about tracks. Every row in T corresponds to a track and every column to a
+%CAM
 %
 %
 %--------------------------------------------------------------------------
@@ -15,7 +17,7 @@ vidObj{2}=VideoReader('CAM2_cut.mp4');
 vidObj{3}=VideoReader('CAM3_cut.mp4');
 
 for i = 1:3;
-vidObj{i}.CurrentTime = 80;
+vidObj{i}.CurrentTime = 50;
 end
 
 
@@ -30,11 +32,13 @@ F=cell(frames,3);
 %SIFT AND SAVE ALL DESCRIPTORS AND KEYPOINTS
 %The most time consuming part of the program
 %--------------------------------------------------------------------------
+A=zeros(480,640,3,frames);
 for n = 1:frames 
     
     for i = 1:1
         
         Irgb=readFrame(vidObj{i});
+        A(:,:,:,n)=Irgb;
         I=single(rgb2gray(Irgb));
         
         
@@ -144,7 +148,7 @@ dmis=[];
                 T(Tj,i).y(size(T(Tj,i).y,2)+1)=y;
                 T(Tj,i).frame(size(T(Tj,i).frame,2)+1)=n+1;
                 matchesmisoldtmp(:,q)=[point;Tj];
-                disp(Tj)
+                %disp(Tj)
          
             end
             dmis(:,matchesmis(1,:))=[]; %Erase matches from missing descriptors
@@ -165,10 +169,10 @@ dmis=[];
 
          disold = matchesold(:,a==0); %Defining the missing tracks (discontinued matches)
          
-         matchesmisold=[matchesmisold ,[[1:size(D{n}(:,disold(1,:)),2)]+size(dmis,2);disold(2,:);zeros(1,size(disold(2,:),2))]];
+         matchesmisold=[matchesmisold ,[[1:size(D{n,i}(:,disold(1,:)),2)]+size(dmis,2);disold(2,:);zeros(1,size(disold(2,:),2))]];
          
          matchesmisold(3,:)=matchesmisold(3,:)+1; %Add to counter for missing frames
-         dmis=[dmis, D{n}(:,disold(1,:))]; %Missing descriptors
+         dmis=[dmis, D{n,i}(:,disold(1,:))]; %Missing descriptors
 
          
          %New matches
